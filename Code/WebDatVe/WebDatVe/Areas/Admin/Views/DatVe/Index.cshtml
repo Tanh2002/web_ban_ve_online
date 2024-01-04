@@ -1,0 +1,107 @@
+﻿@model List<DonHang>
+@using WebDatVe.Hepper
+@{
+    ViewBag.Title = "Danh sách Đặt vé";
+    ViewBag.Controller = "Đặt vé";
+    ViewBag.General = "active";
+    ViewBag.DatVe = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <form action="@Request.Url.AbsolutePath">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="madonhang" placeholder="Mã đơn hàng" value="@ViewBag.MaDonHang">
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="keyword" placeholder="Thông tin khách hàng" value="@ViewBag.TextSearch">
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </form>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Thông tin đơn hàng</th>
+                            <th>Khách hàng</th>
+                            <th>Tổng tiền (VNĐ)</th>
+                            <th>Trạng thái</th>
+                            <th class="w100">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.MaDonHang
+                                </td>
+                                <td>
+                                    <p>Phim: @item.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.Phim.TenPhim</p>
+                                    <p>Rạp: @item.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.Rap.TenRap</p>
+                                    <p>Phòng: @item.ChiTietDonHangs.FirstOrDefault().XuatChieu.Phong.TenPhong</p>
+                                    <p>
+                                        Ghế:
+                                        @foreach (var ct in item.ChiTietDonHangs)
+                                        {
+                                            <span>@ct.Ghe.TenGhe </span>
+                                        }
+                                    </p>
+                                    <p>Thời gian: @item.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.NgayChieu.ToString("dd/MM/yyyy") - @item.ChiTietDonHangs.FirstOrDefault().XuatChieu.GioChieu.ToString("00"):@item.ChiTietDonHangs.FirstOrDefault().XuatChieu.PhutChieu.ToString("00")</p>
+                                </td>
+                                <td>
+                                    <p>Họ tên: @item.KhachHang.HoTen</p>
+                                    <p>SĐT: @item.KhachHang.SoDienThoai</p>
+                                    <p>Email: @item.KhachHang.Email</p>
+                                </td>
+                                <td>
+                                    @item.ThanhTien.ToString("N0")
+                                    <hr />
+                                    @foreach (var dv in item.DonHangDichVus)
+                                    {
+                                        <p>@dv.SoLuong x @dv.DichVu.TenDichVu</p>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var tt in ConfigData.DSTrangThaiDonHang)
+                                    {
+                                        if (item.TrangThai == tt.Key)
+                                        {
+                                            if (tt.Key == (int)TrangThaiDonHang.Moi)
+                                            {
+                                                <label class="label label-info">@tt.Value</label>
+                                            }
+                                            else if (tt.Key == (int)TrangThaiDonHang.DaNhanVe)
+                                            {
+                                                <label class="label label-success">@tt.Value</label>
+                                            }
+                                            else if (tt.Key == (int)TrangThaiDonHang.Huy)
+                                            {
+                                                <label class="label label-danger">@tt.Value</label>
+                                            }
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Receive", new { Id = item.MaDonHang })" onclick="return confirm('Bạn chắc chắn muốn nhận vé cho đơn hàng này?')" class="btn btn-info btn-sm">Nhận vé</a>
+                                    <a href="@Url.Action("Cancel", new { Id = item.MaDonHang })" onclick="return confirm('Bạn chắc chắn muốn hủy đơn hàng đã chọn?')" class="btn btn-danger btn-sm">Hủy</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

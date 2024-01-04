@@ -1,0 +1,28 @@
+﻿@using WebDatVe.Hepper
+@{
+    ViewBag.Title = "Thống kê hoạt động";
+    ViewBag.Controller = "Thống kê";
+    ViewBag.General = "active";
+    ViewBag.ThongKe = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+
+    var db = new WebDatVePhimEntities();
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <h3>Rạp chiếu phim: @db.Raps.Count().ToString("N0")</h3>
+                <h3>Phòng chiếu phim: @db.Phongs.Count().ToString("N0")</h3>
+                <h3>Phim cung cấp: @db.Phims.Count().ToString("N0")</h3>
+                <h3>Dịch vụ cung cấp: @db.DichVus.Count().ToString("N0")</h3>
+                <h3>Số lượng vé đặt: @db.ChiTietDonHangs.Count().ToString("N0")</h3>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

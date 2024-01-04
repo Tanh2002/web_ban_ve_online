@@ -1,0 +1,100 @@
+﻿@model List<LichChieu>
+@using WebDatVe.Hepper
+@{
+    ViewBag.Title = "Danh sách Lịch chiếu";
+    ViewBag.Controller = "Lịch chiếu";
+    ViewBag.General = "active";
+    ViewBag.LichChieu = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+
+    var db = new WebDatVePhimEntities();
+    var list = new List<SelectListItem>() { new SelectListItem { Value = "0", Text = "--Chọn Rạp--" } };
+    foreach (var item in db.Raps.ToList())
+    {
+        list.Add(new SelectListItem { Value = item.MaRap + "", Text = item.TenRap });
+    }
+
+    var listPhim = new List<SelectListItem>() { new SelectListItem { Value = "0", Text = "--Chọn Phim--" } };
+    foreach (var item in db.Phims.ToList())
+    {
+        listPhim.Add(new SelectListItem { Value = item.MaPhim + "", Text = item.TenPhim });
+    }
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <form action="@Request.Url.AbsolutePath">
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control datetimepicker" name="ngayChieu" placeholder="Ngày chiếu" value="@ViewBag.NgayChieu">
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.DropDownList("maRap", list, new Dictionary<string, object>
+                            {
+                                {"class", "form-control"},
+                                {"value", ViewBag.MaRap }
+                            })
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.DropDownList("maPhim", listPhim, new Dictionary<string, object>
+                            {
+                                {"class", "form-control"},
+                                {"value", ViewBag.MaPhim }
+                            })
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary">Tìm kiếm</button>
+                            <a href="@Url.Action("Add")" class="btn btn-success">Thêm</a>
+                        </div>
+                    </div>
+                </form>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ngày</th>
+                            <th>Rạp</th>
+                            <th>Phim</th>
+                            <th>Xuất chiếu</th>
+                            <th style="width: 170px !important;">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.NgayChieu.ToString("yyyy-MM-dd")</td>
+                                <td>@item.Rap.TenRap</td>
+                                <td>
+                                    @item.Phim.TenPhim
+                                    <br />
+                                    Thời gian: @item.Phim.ThoiLuong (phút)
+                                </td>
+                                <td>
+                                    @foreach (var gr in item.XuatChieux.GroupBy(x => x.MaPhong))
+                                    {
+                                        foreach (var xc in gr.OrderBy(x => x.GioChieu).ThenBy(x => x.PhutChieu).ToList())
+                                        {
+                                            <a href="@Url.Action("EditXuatChieu", new { Id = xc.MaXuatChieu })" class="label label-info">@xc.Phong.TenPhong - @ConfigData.DSGio.FirstOrDefault(x => x.Key == xc.GioChieu).Value : @ConfigData.DSPhut.FirstOrDefault(x => x.Key == xc.PhutChieu).Value</a>
+                                        }
+                                        <hr style="margin:5px!important;" />
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("AddXuatChieu", new { Id=item.MaLichChieu })" class="btn btn-success btn-sm">Tạo xuất chiếu</a>
+                                    <a href="@Url.Action("Edit", new { Id = item.MaLichChieu })" class="btn btn-info btn-sm">Sửa</a>
+                                    <a href="@Url.Action("Delete", new { Id = item.MaLichChieu })" onclick="return confirm('Bạn chắc chắn muốn xóa mục đã chọn?')" class="btn btn-danger btn-sm">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

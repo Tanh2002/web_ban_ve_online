@@ -1,0 +1,106 @@
+﻿@model List<TinTuc>
+@{
+    var page = 0;
+    if (ViewBag.Page != null)
+    {
+        page = int.Parse(ViewBag.Page + "");
+    }
+
+    var db = new WebDatVePhimEntities();
+    decimal total = db.TinTucs.Count();
+    var maxpage = Math.Ceiling(total / 5);
+}
+
+<!-- ==========Banner-Section========== -->
+<section class="main-page-header speaker-banner bg_img" data-background="/assets/images/banner/banner07.jpg">
+    <div class="container">
+        <div class="speaker-banner-content">
+            <h2 class="title">Tin tức</h2>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">
+                        Trang chủ
+                    </a>
+                </li>
+                <li>
+                    Tin tức
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- ==========Banner-Section========== -->
+<!-- ==========Blog-Section========== -->
+<section class="blog-section padding-top padding-bottom">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 mb-50 mb-lg-0">
+                @if (Model == null || Model.Count == 0)
+                {
+                    <p>Không có dữ liệu hiển thị</p>
+                }
+                else
+                {
+                    <article>
+                        @foreach (var item in Model)
+                        {
+                            <div class="post-item">
+                                <div class="post-thumb">
+                                    <a href="/news/detail/@item.MaTinTuc">
+                                        <img src="@item.HinhAnh" alt="blog">
+                                    </a>
+                                </div>
+                                <div class="post-content">
+                                    <div class="post-header">
+                                        <h4 class="title">
+                                            <a href="/news/detail/@item.MaTinTuc">
+                                                @item.TieuDe
+                                            </a>
+                                        </h4>
+                                        <p>
+                                            @item.GioiThieu
+                                        </p>
+                                    </div>
+                                    <div class="entry-content">
+                                        <div class="left">
+                                            <span class="date">@item.NgayTao.ToString("dd/MM/yyyy") </span>
+                                            <a href="/news/detail/@item.MaTinTuc" class="buttons">Đọc thêm <i class="flaticon-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </article>
+                    <div class="pagination-area text-center">
+                        @for (var i = 1; i <= maxpage; i++)
+                        {
+                            if (i - 1 == page)
+                            {
+                                if (i == 1)
+                                {
+                                    <a href="/news" class="active">@i</a>
+                                }
+                                else
+                                {
+                                    <a href="/news?page=@i" class="active">@i</a>
+                                }
+                            }
+                            else
+                            {
+                                if (i == 1)
+                                {
+                                    <a href="/news">@i</a>
+                                }
+                                else
+                                {
+                                    <a href="/news?page=@i">@i</a>
+                                }
+                            }
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Blog-Section========== -->

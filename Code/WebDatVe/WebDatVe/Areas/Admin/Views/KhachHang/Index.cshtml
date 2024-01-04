@@ -1,0 +1,61 @@
+﻿@model List<KhachHang>
+@{
+    ViewBag.Title = "Danh sách Khách hàng";
+    ViewBag.Controller = "Khách hàng";
+    ViewBag.General = "active";
+    ViewBag.KhachHang = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <form action="@Request.Url.AbsolutePath">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="keyword" placeholder="Từ khóa" value="@ViewBag.TextSearch">
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary">Tìm kiếm</button>
+                            <a href="@Url.Action("Add")" class="btn btn-success">Thêm</a>
+                        </div>
+                    </div>
+                </form>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tài khoản</th>
+                            <th>Họ tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>CMND</th>
+                            <th style="width:200px;">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.TenDangNhap</td>
+                                <td>@item.HoTen</td>
+                                <td>@item.SoDienThoai</td>
+                                <td>@item.Email</td>
+                                <td>@item.CMND</td>
+                                <td>
+                                    <a href="/Admin/DatVe?makhachhang=@item.MaKhachHang" class="btn btn-default btn-sm">Xem đơn hàng</a>
+                                    <a href="@Url.Action("Edit", new { Id = item.MaKhachHang })" class="btn btn-info btn-sm">Sửa</a>
+                                    <a href="@Url.Action("Delete", new { Id = item.MaKhachHang })" onclick="return confirm('Bạn chắc chắn muốn xóa mục đã chọn?')" class="btn btn-danger btn-sm">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

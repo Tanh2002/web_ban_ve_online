@@ -1,0 +1,104 @@
+﻿@model List<Phong>
+@using WebDatVe.Hepper
+@{
+    ViewBag.Title = "Danh sách Ghế";
+    ViewBag.Controller = "Ghế";
+    ViewBag.General = "active";
+    ViewBag.Ghe = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+
+    var db = new WebDatVePhimEntities();
+    var list = new List<SelectListItem>() { new SelectListItem { Value = "0", Text = "--Chọn Rạp--" } };
+    foreach (var item in db.Raps.ToList())
+    {
+        list.Add(new SelectListItem { Value = item.MaRap + "", Text = item.TenRap });
+    }
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <form action="@Request.Url.AbsolutePath">
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="keyword" placeholder="Từ khóa" value="@ViewBag.TextSearch">
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.DropDownList("maRap", list, new Dictionary<string, object>
+                            {
+                                {"class", "form-control"},
+                                {"value", ViewBag.MaRap }
+                            })
+                        </div>
+                        <div class="col-sm-5">
+                            <button class="btn btn-primary">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </form>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Rạp</th>
+                            <th>Tên phòng</th>
+                            <th>Sơ đồ ghế</th>
+                            <th class="w100">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Rap.TenRap</td>
+                                <td>@item.TenPhong</td>
+                                <td>
+                                    <div style="width: 490px!important;">
+                                        @foreach (var hang in ConfigData.DSHangGhe)
+                                        {
+                                            <div>
+                                                @foreach (var o in ConfigData.DSSoO)
+                                                {
+                                                    var ghe = item.Ghes.FirstOrDefault(x => x.SoHang == hang.Key && x.SoO == o.Key);
+                                                    if (ghe != null)
+                                                    {
+                                                        if (ghe.LoaiGhe == (int)LoaiGhe.GheThuong)
+                                                        {
+                                                            <a href="@Url.Action("Edit", new { Id = ghe.MaGhe })" class="label label-default" style="width: 30px; display: inline-block; margin-right: 5px;">@ghe.TenGhe</a>
+                                                        }
+                                                        else if (ghe.LoaiGhe == (int)LoaiGhe.GheVip)
+                                                        {
+                                                            <a href="@Url.Action("Edit", new { Id = ghe.MaGhe })" class="label label-info" style="width: 30px; display: inline-block; margin-right: 5px;">@ghe.TenGhe</a>
+                                                        }
+                                                        else if (ghe.LoaiGhe == (int)LoaiGhe.GheDoi)
+                                                        {
+                                                            <a href="@Url.Action("Edit", new { Id = ghe.MaGhe })" class="label label-warning" style="width: 68px; display: inline-block; margin-right: 5px;">@ghe.TenGhe</a>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        ghe = item.Ghes.FirstOrDefault(x => x.SoHang == hang.Key && x.SoO == (o.Key - 1) && x.LoaiGhe == (int)LoaiGhe.GheDoi);
+                                                        if (ghe == null)
+                                                        {
+                                                            <a class="label label-default" style="width: 30px; display: inline-block; margin-right: 5px; opacity: 0 !important;"></a>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Add", new { Id = item.MaPhong })" class="btn btn-success btn-sm">Thêm</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

@@ -1,0 +1,137 @@
+﻿@model Phim
+@using WebDatVe.Hepper
+@{
+    var db = new WebDatVePhimEntities();
+    var list = db.TheLoais.ToList();
+
+    var listTrangThai = new List<SelectListItem>();
+    foreach (var item in ConfigData.DSTrangThaiPhim)
+    {
+        listTrangThai.Add(new SelectListItem { Value = item.Key + "", Text = item.Value });
+    }
+}
+
+@Html.HiddenFor(x => x.MaPhim)
+
+<div class="box-body">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Thể loại</label>
+        <div class="col-sm-9">
+            <select class="form-control" id="MaTheLoais" multiple="multiple" name="MaTheLoais">
+                @foreach (var item in list)
+                {
+                    if (Model.TheLoais.Count(x => x.MaTheLoai == item.MaTheLoai) > 0)
+                    {
+                        <option selected="selected" value="@item.MaTheLoai">@item.TenTheLoai</option>
+                    }
+                    else
+                    {
+                        <option value="@item.MaTheLoai">@item.TenTheLoai</option>
+                    }
+                }
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="MaTheLoais" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Tên phim</label>
+        <div class="col-sm-9">
+            @Html.TextBoxFor(x => x.TenPhim, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"required","required" },
+                {"maxlength","500" }
+            })
+            @Html.ValidationMessageFor(x => x.TenPhim)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Giới thiệu</label>
+        <div class="col-sm-9">
+            @Html.TextAreaFor(x => x.GioiThieu, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"rows", "5"},
+                {"required","required" },
+                {"maxlength","1000" }
+            })
+            @Html.ValidationMessageFor(x => x.GioiThieu)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Nội dung</label>
+        <div class="col-sm-9">
+            @Html.TextAreaFor(x => x.NoiDung, new Dictionary<string, object>
+            {
+                {"class", "form-control"}
+            })
+            @Html.ValidationMessageFor(x => x.NoiDung)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Hình ảnh</label>
+        <div class="col-sm-7">
+            @Html.TextBoxFor(x => x.HinhAnh, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"required","required" },
+                {"maxlength","500" }
+            })
+            @Html.ValidationMessageFor(x => x.HinhAnh)
+        </div>
+        <div class="col-sm-2">
+            <a class="btn btn-info" id="btnImg">Tải ảnh lên</a>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label"></label>
+        <div class="col-sm-9">
+            <img src="@Model.HinhAnh" width="150" id="imgAnh" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Link trailer</label>
+        <div class="col-sm-9">
+            @Html.TextBoxFor(x => x.VideoGioiThieu, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"maxlength","1000" }
+            })
+            @Html.ValidationMessageFor(x => x.VideoGioiThieu)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Thời lượng phim (phút)</label>
+        <div class="col-sm-9">
+            @Html.TextBoxFor(x => x.ThoiLuong, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"required","required" },
+                {"type","number" }
+            })
+            @Html.ValidationMessageFor(x => x.ThoiLuong)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Ngày khởi chiếu</label>
+        <div class="col-sm-9">
+            @Html.TextBoxFor(x => x.NgayKhoiChieu, "{0:yyyy-MM-dd}", new Dictionary<string, object>
+            {
+                {"class", "form-control datetimepicker"},
+                {"required","required" },
+            })
+            @Html.ValidationMessageFor(x => x.NgayKhoiChieu)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Trạng thái</label>
+        <div class="col-sm-9">
+            @Html.DropDownListFor(x => x.TrangThai, listTrangThai, new Dictionary<string, object>
+            {
+                {"class", "form-control"},
+                {"required","required" },
+            })
+            @Html.ValidationMessageFor(x => x.TrangThai)
+        </div>
+    </div>
+</div>

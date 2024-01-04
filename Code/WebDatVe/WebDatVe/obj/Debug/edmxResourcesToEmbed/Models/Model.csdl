@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WebDatVePhimModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="WebDatVePhimEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ChiTietDonHangs" EntityType="WebDatVePhimModel.ChiTietDonHang" />
+    <EntitySet Name="DichVus" EntityType="WebDatVePhimModel.DichVu" />
+    <EntitySet Name="DonHangs" EntityType="WebDatVePhimModel.DonHang" />
+    <EntitySet Name="DonHangDichVus" EntityType="WebDatVePhimModel.DonHangDichVu" />
+    <EntitySet Name="Ghes" EntityType="WebDatVePhimModel.Ghe" />
+    <EntitySet Name="KhachHangs" EntityType="WebDatVePhimModel.KhachHang" />
+    <EntitySet Name="LichChieux" EntityType="WebDatVePhimModel.LichChieu" />
+    <EntitySet Name="PhanQuyens" EntityType="WebDatVePhimModel.PhanQuyen" />
+    <EntitySet Name="Phims" EntityType="WebDatVePhimModel.Phim" />
+    <EntitySet Name="Phongs" EntityType="WebDatVePhimModel.Phong" />
+    <EntitySet Name="Raps" EntityType="WebDatVePhimModel.Rap" />
+    <EntitySet Name="sysdiagrams" EntityType="WebDatVePhimModel.sysdiagram" />
+    <EntitySet Name="TaiKhoans" EntityType="WebDatVePhimModel.TaiKhoan" />
+    <EntitySet Name="TheLoais" EntityType="WebDatVePhimModel.TheLoai" />
+    <EntitySet Name="TinTucs" EntityType="WebDatVePhimModel.TinTuc" />
+    <EntitySet Name="XuatChieux" EntityType="WebDatVePhimModel.XuatChieu" />
+    <AssociationSet Name="FK_ChiTietDonHang_DonHang" Association="WebDatVePhimModel.FK_ChiTietDonHang_DonHang">
+      <End Role="DonHang" EntitySet="DonHangs" />
+      <End Role="ChiTietDonHang" EntitySet="ChiTietDonHangs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ChiTietDonHang_Ghe" Association="WebDatVePhimModel.FK_ChiTietDonHang_Ghe">
+      <End Role="Ghe" EntitySet="Ghes" />
+      <End Role="ChiTietDonHang" EntitySet="ChiTietDonHangs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ChiTietDonHang_XuatChieu" Association="WebDatVePhimModel.FK_ChiTietDonHang_XuatChieu">
+      <End Role="XuatChieu" EntitySet="XuatChieux" />
+      <End Role="ChiTietDonHang" EntitySet="ChiTietDonHangs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DonHangDichVu_DichVu" Association="WebDatVePhimModel.FK_DonHangDichVu_DichVu">
+      <End Role="DichVu" EntitySet="DichVus" />
+      <End Role="DonHangDichVu" EntitySet="DonHangDichVus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DonHang_KhachHang" Association="WebDatVePhimModel.FK_DonHang_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHangs" />
+      <End Role="DonHang" EntitySet="DonHangs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DonHangDichVu_DonHang" Association="WebDatVePhimModel.FK_DonHangDichVu_DonHang">
+      <End Role="DonHang" EntitySet="DonHangs" />
+      <End Role="DonHangDichVu" EntitySet="DonHangDichVus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ghe_Phong" Association="WebDatVePhimModel.FK_Ghe_Phong">
+      <End Role="Phong" EntitySet="Phongs" />
+      <End Role="Ghe" EntitySet="Ghes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LichChieu_Phim" Association="WebDatVePhimModel.FK_LichChieu_Phim">
+      <End Role="Phim" EntitySet="Phims" />
+      <End Role="LichChieu" EntitySet="LichChieux" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LichChieu_Rap" Association="WebDatVePhimModel.FK_LichChieu_Rap">
+      <End Role="Rap" EntitySet="Raps" />
+      <End Role="LichChieu" EntitySet="LichChieux" />
+    </AssociationSet>
+    <AssociationSet Name="FK_XuatChieu_LichChieu" Association="WebDatVePhimModel.FK_XuatChieu_LichChieu">
+      <End Role="LichChieu" EntitySet="LichChieux" />
+      <End Role="XuatChieu" EntitySet="XuatChieux" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaiKhoan_PhanQuyen" Association="WebDatVePhimModel.FK_TaiKhoan_PhanQuyen">
+      <End Role="PhanQuyen" EntitySet="PhanQuyens" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Phong_Rap" Association="WebDatVePhimModel.FK_Phong_Rap">
+      <End Role="Rap" EntitySet="Raps" />
+      <End Role="Phong" EntitySet="Phongs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_XuatChieu_Phong" Association="WebDatVePhimModel.FK_XuatChieu_Phong">
+      <End Role="Phong" EntitySet="Phongs" />
+      <End Role="XuatChieu" EntitySet="XuatChieux" />
+    </AssociationSet>
+    <AssociationSet Name="Phim_TheLoai" Association="WebDatVePhimModel.Phim_TheLoai">
+      <End Role="Phim" EntitySet="Phims" />
+      <End Role="TheLoai" EntitySet="TheLoais" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ChiTietDonHang">
+    <Key>
+      <PropertyRef Name="MaChiTietDonHang" />
+    </Key>
+    <Property Name="MaChiTietDonHang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaDonHang" Type="Int32" Nullable="false" />
+    <Property Name="MaGhe" Type="Int32" Nullable="false" />
+    <Property Name="MaXuatChieu" Type="Int32" Nullable="false" />
+    <Property Name="GiaVe" Type="Int32" />
+    <NavigationProperty Name="DonHang" Relationship="WebDatVePhimModel.FK_ChiTietDonHang_DonHang" FromRole="ChiTietDonHang" ToRole="DonHang" />
+    <NavigationProperty Name="Ghe" Relationship="WebDatVePhimModel.FK_ChiTietDonHang_Ghe" FromRole="ChiTietDonHang" ToRole="Ghe" />
+    <NavigationProperty Name="XuatChieu" Relationship="WebDatVePhimModel.FK_ChiTietDonHang_XuatChieu" FromRole="ChiTietDonHang" ToRole="XuatChieu" />
+  </EntityType>
+  <EntityType Name="DichVu">
+    <Key>
+      <PropertyRef Name="MaDichVu" />
+    </Key>
+    <Property Name="MaDichVu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenDichVu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="GiaTien" Type="Int32" Nullable="false" />
+    <Property Name="HinhAnh" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TrangThai" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DonHangDichVus" Relationship="WebDatVePhimModel.FK_DonHangDichVu_DichVu" FromRole="DichVu" ToRole="DonHangDichVu" />
+  </EntityType>
+  <EntityType Name="DonHang">
+    <Key>
+      <PropertyRef Name="MaDonHang" />
+    </Key>
+    <Property Name="MaDonHang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaKhachHang" Type="Int32" Nullable="false" />
+    <Property Name="NgayDat" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TrangThai" Type="Int32" Nullable="false" />
+    <Property Name="ThanhTien" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ChiTietDonHangs" Relationship="WebDatVePhimModel.FK_ChiTietDonHang_DonHang" FromRole="DonHang" ToRole="ChiTietDonHang" />
+    <NavigationProperty Name="KhachHang" Relationship="WebDatVePhimModel.FK_DonHang_KhachHang" FromRole="DonHang" ToRole="KhachHang" />
+    <NavigationProperty Name="DonHangDichVus" Relationship="WebDatVePhimModel.FK_DonHangDichVu_DonHang" FromRole="DonHang" ToRole="DonHangDichVu" />
+  </EntityType>
+  <EntityType Name="DonHangDichVu">
+    <Key>
+      <PropertyRef Name="MaDonHangDichVu" />
+    </Key>
+    <Property Name="MaDonHangDichVu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaDonHang" Type="Int32" Nullable="false" />
+    <Property Name="MaDichVu" Type="Int32" Nullable="false" />
+    <Property Name="SoLuong" Type="Int32" Nullable="false" />
+    <Property Name="DonGia" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DichVu" Relationship="WebDatVePhimModel.FK_DonHangDichVu_DichVu" FromRole="DonHangDichVu" ToRole="DichVu" />
+    <NavigationProperty Name="DonHang" Relationship="WebDatVePhimModel.FK_DonHangDichVu_DonHang" FromRole="DonHangDichVu" ToRole="DonHang" />
+  </EntityType>
+  <EntityType Name="Ghe">
+    <Key>
+      <PropertyRef Name="MaGhe" />
+    </Key>
+    <Property Name="MaGhe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaPhong" Type="Int32" Nullable="false" />
+    <Property Name="TenGhe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LoaiGhe" Type="Int32" Nullable="false" />
+    <Property Name="SoHang" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SoO" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ChiTietDonHangs" Relationship="WebDatVePhimModel.FK_ChiTietDonHang_Ghe" FromRole="Ghe" ToRole="ChiTietDonHang" />
+    <NavigationProperty Name="Phong" Relationship="WebDatVePhimModel.FK_Ghe_Phong" FromRole="Ghe" ToRole="Phong" />
+  </EntityType>
+  <EntityType Name="KhachHang">
+    <Key>
+      <PropertyRef Name="MaKhachHang" />
+    </Key>
+    <Property Name="MaKhachHang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HoTen" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="TenDangNhap" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SoDienThoai" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="CMND" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DonHangs" Relationship="WebDatVePhimModel.FK_DonHang_KhachHang" FromRole="KhachHang" ToRole="DonHang" />
+  </EntityType>
+  <EntityType Name="LichChieu">
+    <Key>
+      <PropertyRef Name="MaLichChieu" />
+    </Key>
+    <Property Name="MaLichChieu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaRap" Type="Int32" Nullable="false" />
+    <Property Name="MaPhim" Type="Int32" Nullable="false" />
+    <Property Name="NgayChieu" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Phim" Relationship="WebDatVePhimModel.FK_LichChieu_Phim" FromRole="LichChieu" ToRole="Phim" />
+    <NavigationProperty Name="Rap" Relationship="WebDatVePhimModel.FK_LichChieu_Rap" FromRole="LichChieu" ToRole="Rap" />
+    <NavigationProperty Name="XuatChieux" Relationship="WebDatVePhimModel.FK_XuatChieu_LichChieu" FromRole="LichChieu" ToRole="XuatChieu" />
+  </EntityType>
+  <EntityType Name="PhanQuyen">
+    <Key>
+      <PropertyRef Name="MaQuyen" />
+    </Key>
+    <Property Name="MaQuyen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenQuyen" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DanhSach" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TaiKhoans" Relationship="WebDatVePhimModel.FK_TaiKhoan_PhanQuyen" FromRole="PhanQuyen" ToRole="TaiKhoan" />
+  </EntityType>
+  <EntityType Name="Phim">
+    <Key>
+      <PropertyRef Name="MaPhim" />
+    </Key>
+    <Property Name="MaPhim" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenPhim" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="GioiThieu" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="HinhAnh" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="VideoGioiThieu" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="ThoiLuong" Type="Int32" Nullable="false" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TrangThai" Type="Int32" Nullable="false" />
+    <Property Name="NgayKhoiChieu" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="LichChieux" Relationship="WebDatVePhimModel.FK_LichChieu_Phim" FromRole="Phim" ToRole="LichChieu" />
+    <NavigationProperty Name="TheLoais" Relationship="WebDatVePhimModel.Phim_TheLoai" FromRole="Phim" ToRole="TheLoai" />
+  </EntityType>
+  <EntityType Name="Phong">
+    <Key>
+      <PropertyRef Name="MaPhong" />
+    </Key>
+    <Property Name="MaPhong" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaRap" Type="Int32" Nullable="false" />
+    <Property Name="TenPhong" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MoTa" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Ghes" Relationship="WebDatVePhimModel.FK_Ghe_Phong" FromRole="Phong" ToRole="Ghe" />
+    <NavigationProperty Name="Rap" Relationship="WebDatVePhimModel.FK_Phong_Rap" FromRole="Phong" ToRole="Rap" />
+    <NavigationProperty Name="XuatChieux" Relationship="WebDatVePhimModel.FK_XuatChieu_Phong" FromRole="Phong" ToRole="XuatChieu" />
+  </EntityType>
+  <EntityType Name="Rap">
+    <Key>
+      <PropertyRef Name="MaRap" />
+    </Key>
+    <Property Name="MaRap" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenRap" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="HinhAnh" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DiaChi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LichChieux" Relationship="WebDatVePhimModel.FK_LichChieu_Rap" FromRole="Rap" ToRole="LichChieu" />
+    <NavigationProperty Name="Phongs" Relationship="WebDatVePhimModel.FK_Phong_Rap" FromRole="Rap" ToRole="Phong" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TaiKhoan">
+    <Key>
+      <PropertyRef Name="MaTaiKhoan" />
+    </Key>
+    <Property Name="MaTaiKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HoTen" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="TenDangNhap" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaQuyen" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PhanQuyen" Relationship="WebDatVePhimModel.FK_TaiKhoan_PhanQuyen" FromRole="TaiKhoan" ToRole="PhanQuyen" />
+  </EntityType>
+  <EntityType Name="TheLoai">
+    <Key>
+      <PropertyRef Name="MaTheLoai" />
+    </Key>
+    <Property Name="MaTheLoai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenTheLoai" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MoTa" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Phims" Relationship="WebDatVePhimModel.Phim_TheLoai" FromRole="TheLoai" ToRole="Phim" />
+  </EntityType>
+  <EntityType Name="TinTuc">
+    <Key>
+      <PropertyRef Name="MaTinTuc" />
+    </Key>
+    <Property Name="MaTinTuc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TieuDe" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="GioiThieu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="HinhAnh" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="XuatChieu">
+    <Key>
+      <PropertyRef Name="MaXuatChieu" />
+    </Key>
+    <Property Name="MaXuatChieu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaLichChieu" Type="Int32" Nullable="false" />
+    <Property Name="MaPhong" Type="Int32" Nullable="false" />
+    <Property Name="GioChieu" Type="Int32" Nullable="false" />
+    <Property Name="PhutChieu" Type="Int32" Nullable="false" />
+    <Property Name="LoaiChieuPhim" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ChiTietDonHangs" Relationship="WebDatVePhimModel.FK_ChiTietDonHang_XuatChieu" FromRole="XuatChieu" ToRole="ChiTietDonHang" />
+    <NavigationProperty Name="LichChieu" Relationship="WebDatVePhimModel.FK_XuatChieu_LichChieu" FromRole="XuatChieu" ToRole="LichChieu" />
+    <NavigationProperty Name="Phong" Relationship="WebDatVePhimModel.FK_XuatChieu_Phong" FromRole="XuatChieu" ToRole="Phong" />
+  </EntityType>
+  <Association Name="FK_ChiTietDonHang_DonHang">
+    <End Type="WebDatVePhimModel.DonHang" Role="DonHang" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.ChiTietDonHang" Role="ChiTietDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DonHang">
+        <PropertyRef Name="MaDonHang" />
+      </Principal>
+      <Dependent Role="ChiTietDonHang">
+        <PropertyRef Name="MaDonHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ChiTietDonHang_Ghe">
+    <End Type="WebDatVePhimModel.Ghe" Role="Ghe" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.ChiTietDonHang" Role="ChiTietDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ghe">
+        <PropertyRef Name="MaGhe" />
+      </Principal>
+      <Dependent Role="ChiTietDonHang">
+        <PropertyRef Name="MaGhe" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ChiTietDonHang_XuatChieu">
+    <End Type="WebDatVePhimModel.XuatChieu" Role="XuatChieu" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.ChiTietDonHang" Role="ChiTietDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="XuatChieu">
+        <PropertyRef Name="MaXuatChieu" />
+      </Principal>
+      <Dependent Role="ChiTietDonHang">
+        <PropertyRef Name="MaXuatChieu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DonHangDichVu_DichVu">
+    <End Type="WebDatVePhimModel.DichVu" Role="DichVu" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.DonHangDichVu" Role="DonHangDichVu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DichVu">
+        <PropertyRef Name="MaDichVu" />
+      </Principal>
+      <Dependent Role="DonHangDichVu">
+        <PropertyRef Name="MaDichVu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DonHang_KhachHang">
+    <End Type="WebDatVePhimModel.KhachHang" Role="KhachHang" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.DonHang" Role="DonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="MaKhachHang" />
+      </Principal>
+      <Dependent Role="DonHang">
+        <PropertyRef Name="MaKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DonHangDichVu_DonHang">
+    <End Type="WebDatVePhimModel.DonHang" Role="DonHang" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.DonHangDichVu" Role="DonHangDichVu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DonHang">
+        <PropertyRef Name="MaDonHang" />
+      </Principal>
+      <Dependent Role="DonHangDichVu">
+        <PropertyRef Name="MaDonHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ghe_Phong">
+    <End Type="WebDatVePhimModel.Phong" Role="Phong" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.Ghe" Role="Ghe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phong">
+        <PropertyRef Name="MaPhong" />
+      </Principal>
+      <Dependent Role="Ghe">
+        <PropertyRef Name="MaPhong" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LichChieu_Phim">
+    <End Type="WebDatVePhimModel.Phim" Role="Phim" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.LichChieu" Role="LichChieu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phim">
+        <PropertyRef Name="MaPhim" />
+      </Principal>
+      <Dependent Role="LichChieu">
+        <PropertyRef Name="MaPhim" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LichChieu_Rap">
+    <End Type="WebDatVePhimModel.Rap" Role="Rap" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.LichChieu" Role="LichChieu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rap">
+        <PropertyRef Name="MaRap" />
+      </Principal>
+      <Dependent Role="LichChieu">
+        <PropertyRef Name="MaRap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_XuatChieu_LichChieu">
+    <End Type="WebDatVePhimModel.LichChieu" Role="LichChieu" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.XuatChieu" Role="XuatChieu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LichChieu">
+        <PropertyRef Name="MaLichChieu" />
+      </Principal>
+      <Dependent Role="XuatChieu">
+        <PropertyRef Name="MaLichChieu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaiKhoan_PhanQuyen">
+    <End Type="WebDatVePhimModel.PhanQuyen" Role="PhanQuyen" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.TaiKhoan" Role="TaiKhoan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhanQuyen">
+        <PropertyRef Name="MaQuyen" />
+      </Principal>
+      <Dependent Role="TaiKhoan">
+        <PropertyRef Name="MaQuyen" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Phong_Rap">
+    <End Type="WebDatVePhimModel.Rap" Role="Rap" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.Phong" Role="Phong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rap">
+        <PropertyRef Name="MaRap" />
+      </Principal>
+      <Dependent Role="Phong">
+        <PropertyRef Name="MaRap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_XuatChieu_Phong">
+    <End Type="WebDatVePhimModel.Phong" Role="Phong" Multiplicity="1" />
+    <End Type="WebDatVePhimModel.XuatChieu" Role="XuatChieu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phong">
+        <PropertyRef Name="MaPhong" />
+      </Principal>
+      <Dependent Role="XuatChieu">
+        <PropertyRef Name="MaPhong" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Phim_TheLoai">
+    <End Type="WebDatVePhimModel.Phim" Role="Phim" Multiplicity="*" />
+    <End Type="WebDatVePhimModel.TheLoai" Role="TheLoai" Multiplicity="*" />
+  </Association>
+</Schema>

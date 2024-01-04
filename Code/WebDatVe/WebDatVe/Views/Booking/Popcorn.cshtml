@@ -1,0 +1,188 @@
+﻿@model XuatChieu
+@using WebDatVe.Hepper
+@{
+    ViewBag.Title = "SeatPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var db = new WebDatVePhimEntities();
+    var dsDichVu = db.DichVus.Where(x => x.TrangThai == (int)TrangThaiDichVu.DangBan).ToList();
+    var tenDVs = new List<string>();
+    if (ViewBag.tenDVs != null)
+    {
+        tenDVs = (List<string>)ViewBag.tenDVs;
+    }
+}
+
+<!-- ==========Banner-Section========== -->
+<section class="details-banner hero-area bg_img seat-plan-banner" data-background="/assets/images/banner/banner04.jpg">
+    <div class="container">
+        <div class="details-banner-wrapper">
+            <div class="details-banner-content style-two">
+                <h3 class="title">@Model.LichChieu.Phim.TenPhim</h3>
+                <div class="tags">
+                    <a href="javascript:;">Rạp: @Model.LichChieu.Rap.TenRap</a>
+                    <a href="javascript:;">@ConfigData.DSLoaiChieuPhim.FirstOrDefault(x => x.Key == Model.LoaiChieuPhim).Value</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Banner-Section========== -->
+<!-- ==========Page-Title========== -->
+<section class="page-title bg-one">
+    <div class="container">
+        <div class="page-title-area">
+            <div class="item md-order-1">
+                <a href="/booking?movies=@ViewBag.movies&cinema=@ViewBag.cinema" class="custom-button back-button">
+                    <i class="flaticon-double-right-arrows-angles"></i>Quay lại
+                </a>
+            </div>
+            <div class="item date-item">
+                <span class="date">@Model.LichChieu.NgayChieu.ToString("dd/MM/yyyy")</span>
+                <select class="select-bar">
+                    <option value="sc1">@Model.GioChieu.ToString("00"):@Model.PhutChieu.ToString("00")</option>
+                </select>
+            </div>
+            <div class="item">
+                <h5 class="title">05:00</h5>
+                <p>Thời gian hết hạn</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Page-Title========== -->
+<!-- ==========Movie-Section========== -->
+<div class="movie-facility padding-bottom padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="c-thumb padding-bottom">
+                    <img src="/assets/images/sidebar/banner/banner04.jpg" alt="sidebar/banner">
+                </div>
+                <div class="section-header-3">
+                    <span class="cate">
+                        BẠN ĐÓI RỒI
+                    </span>
+                    <h2 class="title">
+                        chúng tôi có đồ ăn
+                    </h2>
+                    <p>
+                        Đặt trước đồ ăn của bạn và tiết kiệm nhiều hơn!
+                    </p>
+                </div>
+                <div class="grid--area">
+                    <div class="grid-area">
+                        @foreach (var item in dsDichVu)
+                        {
+                            <div class="grid-item combos popcorn">
+                                <div class="grid-inner">
+                                    <div class="grid-thumb" style="max-height: 230px;">
+                                        <img src="@item.HinhAnh" alt="movie/popcorn">
+                                        <div class="offer-tag">
+                                            @item.GiaTien.ToString("N0") đ
+                                        </div>
+                                    </div>
+                                    <div class="grid-content">
+                                        <h5 class="subtitle" style="min-height: 62px;">
+                                            <a href="javascipt:;">
+                                                @item.TenDichVu
+                                            </a>
+                                        </h5>
+                                        <div class="cart-button">
+                                            <div class="cart-plus-minus">
+                                                <input class="cart-plus-minus-box" type="text" id="sldichvu_@item.MaDichVu" value="@tenDVs.Count(x=>x == item.TenDichVu)">
+                                            </div>
+                                            <button class="custom-button" onclick="themdichvu(@item.MaDichVu)">
+                                                Thêm
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="booking-summery bg-one">
+                    <h4 class="title">Thanh toán</h4>
+                    <ul>
+                        <li>
+                            <h6 class="subtitle">@Model.LichChieu.Phim.TenPhim</h6>
+                            <span class="info">@ConfigData.DSLoaiChieuPhim.FirstOrDefault(x => x.Key == Model.LoaiChieuPhim).Value</span>
+                        </li>
+                        <li>
+                            <h6 class="subtitle"><span>Rạp: @Model.LichChieu.Rap.TenRap</span><span>@ViewBag.count</span></h6>
+                            <div class="info"><span>@Model.LichChieu.NgayChieu.ToString("dd/MM/yyyy"), @Model.GioChieu.ToString("00"):@Model.PhutChieu.ToString("00")</span> <span>Vé</span></div>
+                        </li>
+                        <li>
+                            <h6 class="subtitle mb-0"><span>Tiền vé</span><span>@ViewBag.tienve đ</span></h6>
+                        </li>
+                    </ul>
+                    <ul class="side-shape">
+                        <li>
+                            <h6 class="subtitle"><span>Dịch vụ</span><span>@ViewBag.tiendichvu đ</span></h6>
+                            @foreach (var item in tenDVs.GroupBy(x => x))
+                            {
+                                <span class="info"><span>@item.Count() x @item.Key</span></span>
+                            }
+                        </li>
+                    </ul>
+                </div>
+                <div class="proceed-area  text-center">
+                    <h6 class="subtitle"><span>Tổng tiền</span><span>@ViewBag.tongtien đ</span></h6>
+
+                    <a href="javascript:;" class="custom-button back-button" onclick="xacnhandathang();">Xác nhận</a>
+                </div>
+                <div class="note">
+                    <h5 class="title">Ghi chú: </h5>
+                    <p>Vui lòng cho chúng tôi 15 phút để chuẩn bị F&B khi bạn đến rạp chiếu phim</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form action="@Url.Action("popcorn")" method="get">
+    <input type="hidden" name="movies" value="@ViewBag.movies" />
+    <input type="hidden" name="cinema" value="@ViewBag.cinema" />
+    <input type="hidden" name="screen" value="@Model.MaXuatChieu" />
+    <input type="hidden" name="place" value="@ViewBag.place" />
+    <input type="hidden" name="service" id="services" value="@ViewBag.service" />
+    <button type="submit" id="themdichvu" style="opacity:0; display: none;"></button>
+</form>
+<form action="@Url.Action("checkout")" method="get">
+    <input type="hidden" name="movies" value="@ViewBag.movies" />
+    <input type="hidden" name="cinema" value="@ViewBag.cinema" />
+    <input type="hidden" name="screen" value="@Model.MaXuatChieu" />
+    <input type="hidden" name="place" value="@ViewBag.place" />
+    <input type="hidden" name="service" value="@ViewBag.service" />
+    <button type="submit" id="xacnhan" style="opacity:0; display: none;"></button>
+</form>
+<!-- ==========Movie-Section========== -->
+
+<script>
+    var dsdv = [];
+
+    function themdichvu(madichvu) {
+        if ($('#services').val() != '' && $('#services').val() != null && $('#services').val() != undefined) {
+            dsdv = $('#services').val().split(',');
+        }
+        var sl = $('#sldichvu_' + madichvu).val();
+        dsdv = dsdv.filter(item => item !== madichvu);
+        for (var i = 0; i < sl; i++) {
+            dsdv.push(madichvu);
+        }
+
+        xacnhandichvu();
+    }
+
+    function xacnhandichvu() {
+        $('#services').val(dsdv.toString());
+        $('#themdichvu').click();
+    }
+
+    function xacnhandathang() {
+        $('#xacnhan').click();
+    }
+</script>

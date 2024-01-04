@@ -1,0 +1,60 @@
+﻿@model List<TinTuc>
+@{
+    ViewBag.Title = "Danh sách Tin tức";
+    ViewBag.Controller = "Tin tức";
+    ViewBag.General = "active";
+    ViewBag.TinTuc = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <form action="@Request.Url.AbsolutePath">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="keyword" placeholder="Từ khóa" value="@ViewBag.TextSearch">
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary">Tìm kiếm</button>
+                            <a href="@Url.Action("Add")" class="btn btn-success">Thêm</a>
+                        </div>
+                    </div>
+                </form>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Hình ảnh</th>
+                            <th>Tiêu đề</th>
+                            <th>Giới thiệu</th>
+                            <th>Ngày tạo</th>
+                            <th class="w100">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@item.HinhAnh" width="100" />
+                                </td>
+                                <td>@item.TieuDe</td>
+                                <td>@item.GioiThieu</td>
+                                <td>@item.NgayTao.ToString("dd-MM-yyyy")</td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { Id = item.MaTinTuc })" class="btn btn-info btn-sm">Sửa</a>
+                                    <a href="@Url.Action("Delete", new { Id = item.MaTinTuc })" onclick="return confirm('Bạn chắc chắn muốn xóa mục đã chọn?')" class="btn btn-danger btn-sm">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

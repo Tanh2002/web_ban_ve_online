@@ -1,0 +1,223 @@
+﻿@model XuatChieu
+@using WebDatVe.Hepper
+@{
+    ViewBag.Title = "SeatPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var db = new WebDatVePhimEntities();
+}
+
+<!-- ==========Banner-Section========== -->
+<section class="details-banner hero-area bg_img seat-plan-banner" data-background="/assets/images/banner/banner04.jpg">
+    <div class="container">
+        <div class="details-banner-wrapper">
+            <div class="details-banner-content style-two">
+                <h3 class="title">@Model.LichChieu.Phim.TenPhim</h3>
+                <div class="tags">
+                    <a href="javascript:;">Rạp: @Model.LichChieu.Rap.TenRap</a>
+                    <a href="javascript:;">@ConfigData.DSLoaiChieuPhim.FirstOrDefault(x => x.Key == Model.LoaiChieuPhim).Value</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Banner-Section========== -->
+<!-- ==========Page-Title========== -->
+<section class="page-title bg-one">
+    <div class="container">
+        <div class="page-title-area">
+            <div class="item md-order-1">
+                <a href="/booking?movies=@ViewBag.movies&cinema=@ViewBag.cinema" class="custom-button back-button">
+                    <i class="flaticon-double-right-arrows-angles"></i>Quay lại
+                </a>
+            </div>
+            <div class="item date-item">
+                <span class="date">@Model.LichChieu.NgayChieu.ToString("dd/MM/yyyy")</span>
+                <select class="select-bar">
+                    <option value="sc1">@Model.GioChieu.ToString("00"):@Model.PhutChieu.ToString("00")</option>
+                </select>
+            </div>
+            <div class="item">
+                <h5 class="title">05:00</h5>
+                <p>Thời gian hết hạn</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Page-Title========== -->
+<!-- ==========Movie-Section========== -->
+<div class="seat-plan-section padding-bottom padding-top">
+    <div class="container">
+        <div class="screen-area">
+            <h4 class="screen">screen</h4>
+            <div class="screen-thumb">
+                <img src="/assets/images/movie/screen-thumb.png" alt="movie">
+            </div>
+            <div class="screen-wrapper">
+                <ul class="seat-area">
+                    @foreach (var hang in ConfigData.DSHangGhe)
+                    {
+                        <li class="seat-line">
+                            <span>@hang.Value</span>
+                            <ul class="seat--area">
+                                <li class="front-seat">
+                                    <ul>
+                                        @foreach (var o in ConfigData.DSSoO)
+                                        {
+                                            var ghe = Model.Phong.Ghes.FirstOrDefault(x => x.SoHang == hang.Key && x.SoO == o.Key);
+                                            if (ghe != null)
+                                            {
+                                                var datcho = db.ChiTietDonHangs.FirstOrDefault(x => x.MaGhe == ghe.MaGhe && x.MaXuatChieu == Model.MaXuatChieu && x.DonHang.TrangThai != (int)TrangThaiDonHang.Huy);
+                                                if (ghe.LoaiGhe == (int)LoaiGhe.GheThuong)
+                                                {
+                                                    if (datcho == null || datcho.MaChiTietDonHang == 0)
+                                                    {
+                                                        <li class="single-seat" onclick="chonghe(@ghe.MaGhe, '@ghe.TenGhe', @ConfigData.VeGheThuong)">
+                                                            <img id="ghe_@ghe.MaGhe" src="/assets/images/movie/seat03.png" alt="seat">
+                                                            <span class="sit-num">@ghe.TenGhe</span>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="single-seat">
+                                                            <img src="/assets/images/movie/seat01-free.png" alt="seat">
+                                                        </li>
+                                                    }
+                                                }
+                                                else if (ghe.LoaiGhe == (int)LoaiGhe.GheVip)
+                                                {
+                                                    if (datcho == null || datcho.MaChiTietDonHang == 0)
+                                                    {
+                                                        <li class="single-seat" onclick="chonghe(@ghe.MaGhe, '@ghe.TenGhe', @ConfigData.VeGheVip)">
+                                                            <img id="ghe_@ghe.MaGhe" src="/assets/images/movie/seat01.png" alt="seat">
+                                                            <span class="sit-num">@ghe.TenGhe</span>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="single-seat">
+                                                            <img src="/assets/images/movie/seat01-free.png" alt="seat">
+                                                        </li>
+                                                    }
+                                                }
+                                                else if (ghe.LoaiGhe == (int)LoaiGhe.GheDoi)
+                                                {
+                                                    if (datcho == null || datcho.MaChiTietDonHang == 0)
+                                                    {
+                                                        <li class="single-seat" onclick="chonghe(@ghe.MaGhe, '@ghe.TenGhe', @ConfigData.VeGheDoi)">
+                                                            <img id="ghe_@ghe.MaGhe" src="/assets/images/movie/seat02.png" alt="seat">
+                                                            <span class="sit-num">@ghe.TenGhe</span>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="single-seat">
+                                                            <img src="/assets/images/movie/seat02-free.png" alt="seat">
+                                                        </li>
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                ghe = Model.Phong.Ghes.FirstOrDefault(x => x.SoHang == hang.Key && x.SoO == (o.Key - 1) && x.LoaiGhe == (int)LoaiGhe.GheDoi);
+                                                if (ghe == null)
+                                                {
+                                                    <li class="single-seat">
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span>@hang.Value</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="proceed-book bg_img" data-background="/assets/images/movie/movie-bg-proceed.jpg">
+            <div class="proceed-to-book">
+                <div class="book-item">
+                    <span>Bạn Đã Chọn Chỗ Ngồi</span>
+                    <h3 class="title" id="dstenghe"></h3>
+                </div>
+                <div class="book-item">
+                    <span>Tổng tiền</span>
+                    <h3 class="title" id="httien">0 đ</h3>
+                </div>
+                <div class="book-item">
+                    <form action="@Url.Action("popcorn")" method="get">
+                        <input type="hidden" name="movies" value="@ViewBag.movies" />
+                        <input type="hidden" name="cinema" value="@ViewBag.cinema" />
+                        <input type="hidden" name="screen" value="@Model.MaXuatChieu" />
+                        <input type="hidden" name="place" value="" id="dsghe" />
+                        <a href="javascript:;" class="custom-button" onclick="xacnhan();">Xác nhận</a>
+                        <button type="submit" id="xacnhan" style="opacity:0; display: none;"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ==========Movie-Section========== -->
+<style>
+    .ghe-active {
+        filter: brightness(5) invert(0);
+        -webkit-filter: brightness(5) invert(0);
+    }
+</style>
+<script>
+    var tongtien = 0;
+    var dsghe = [];
+    var dstenghe = []
+    function chonghe(maghe, tenghe, giave) {
+        if (dsghe.includes(maghe)) {
+            dsghe = dsghe.filter(item => item !== maghe);
+            dstenghe = dstenghe.filter(item => item !== tenghe);
+            tongtien = tongtien - giave;
+
+            $('#ghe_' + maghe).removeClass('ghe-active');
+        }
+        else {
+            dsghe.push(maghe);
+            dstenghe.push(tenghe);
+            tongtien = tongtien + giave;
+
+            $('#ghe_' + maghe).addClass('ghe-active');
+        }
+
+        hienthighe();
+        hienthitien();
+    }
+
+    function hienthighe() {
+        $('#dsghe').val(dsghe.toString());
+        $('#dstenghe').html(dstenghe.toString());
+    }
+
+    function hienthitien() {
+        $('#httien').html(formatNumber(tongtien) + ' đ');
+    }
+
+    function xacnhan() {
+        if (dsghe.length == 0) {
+            alert('Bạn cần chọn ghế');
+        }
+        else {
+            $('#xacnhan').click();
+        }
+    }
+
+    function formatNumber(number) {
+        number = number.toFixed(0) + '';
+        x = number.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+</script>

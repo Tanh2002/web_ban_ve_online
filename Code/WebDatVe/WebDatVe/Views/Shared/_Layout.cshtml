@@ -1,0 +1,210 @@
+﻿@{
+    HttpCookie cookie = Request.Cookies.Get("HoTenKhach");
+    string tenkhach = "";
+    if (cookie != null)
+    {
+        tenkhach = cookie.Value;
+    }
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/odometer.css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/jquery.animatedheadline.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-icon">
+
+    <title>Boleto  - Website đặt vé xem phim</title>
+
+
+</head>
+
+<body>
+    <!-- ==========Preloader========== -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ==========Preloader========== -->
+    <!-- ==========Overlay========== -->
+    <div class="overlay"></div>
+    <a href="#0" class="scrollToTop">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- ==========Overlay========== -->
+    <!-- ==========Header-Section========== -->
+    <header class="header-section">
+        <div class="container">
+            <div class="header-wrapper">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/assets/images/logo/logo.png" alt="logo">
+                    </a>
+                </div>
+                <ul class="menu">
+                    <li>
+                        <a href="/" class="@ViewBag.Home">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a href="/movies" class="@ViewBag.Movies">Phim</a>
+                    </li>
+                    <li>
+                        <a href="/cinema" class="@ViewBag.Cinema">Rạp chiếu</a>
+                    </li>
+                    <li>
+                        <a href="/news" class="@ViewBag.News">Tin tức</a>
+                    </li>
+                    <li>
+                        <a href="/home/contact" class="@ViewBag.Contact">Liên hệ</a>
+                    </li>
+                    @if (string.IsNullOrEmpty(tenkhach))
+                    {
+                        <li class="header-button pr-0">
+                            <a href="javascript:;">Đăng nhập</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="/account/login" style="border-radius: 0; background:none;">Khách hàng</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/dangnhap" style="border-radius: 0; background:none;">Quản trị</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="header-button pr-0">
+                            <a href="javascript:;">Xin chào: @Server.UrlDecode(tenkhach)</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="/account" style="border-radius: 0; background:none;">Tài khoản</a>
+                                </li>
+                                <li>
+                                    <a href="/account/logout" style="border-radius: 0; background:none;">Thoát</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                <div class="header-bar d-lg-none">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ==========Header-Section========== -->
+    @RenderBody()
+    <!-- ==========Newslater-Section========== -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-top">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/assets/images/footer/footer-logo.png" alt="footer">
+                    </a>
+                </div>
+                <ul class="social-icons">
+                    <li>
+                        <a href="#">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="active">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fab fa-google"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-area">
+                    <div class="left">
+                        <p>Copyright © 2023.All Rights Reserved By <a href="/">Boleto </a></p>
+                    </div>
+                    <ul class="links">
+                        <li>
+                            <a href="/home/about">Giới thiệu</a>
+                        </li>
+                        <li>
+                            <a href="/home/termsofuse">Điều khoản sử dụng</a>
+                        </li>
+                        <li>
+                            <a href="/home/privacypolicy">Chính sách bảo mật</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ==========Newslater-Section========== -->
+
+
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/heandline.js"></script>
+    <script src="/assets/js/isotope.pkgd.min.js"></script>
+    <script src="/assets/js/magnific-popup.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/wow.min.js"></script>
+    <script src="/assets/js/countdown.min.js"></script>
+    <script src="/assets/js/odometer.min.js"></script>
+    <script src="/assets/js/viewport.jquery.js"></script>
+    <script src="/assets/js/nice-select.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/ClientScripts/mvcfoolproof.unobtrusive.min.js"></script>
+    <script src="~/Scripts/messages_vi.js"></script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/63fff90831ebfa0fe7f0277c/1gqfu9ip0';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+</html>

@@ -1,0 +1,193 @@
+﻿@model List<Phim>
+@using WebDatVe.Hepper
+@{
+    var db = new WebDatVePhimEntities();
+    var theloais = db.TheLoais.ToList();
+    var raps = db.Raps.ToList();
+    var category = 0;
+    if (ViewBag.category != null)
+    {
+        category = int.Parse(ViewBag.category + "");
+    }
+
+    var cinema = 0;
+    if (ViewBag.cinema != null)
+    {
+        cinema = int.Parse(ViewBag.cinema + "");
+    }
+
+}
+<!-- ==========Banner-Section========== -->
+<section class="banner-section">
+    <div class="banner-bg bg_img bg-fixed" data-background="/assets/images/banner/banner02.jpg"></div>
+    <div class="container">
+        <div class="banner-content">
+            <h1 class="title bold">nhận <span class="color-theme">vé</span> xem phim</h1>
+            <p>
+                Mua vé xem phim trước, tìm thời gian chiếu phim, xem đoạn giới thiệu, đọc các bài phê bình phim và hơn thế nữa
+            </p>
+        </div>
+    </div>
+</section>
+<!-- ==========Banner-Section========== -->
+<!-- ==========Ticket-Search========== -->
+<section class="search-ticket-section padding-top pt-lg-0">
+    <div class="container">
+        <div class="search-tab bg_img" data-background="/assets/images/ticket/ticket-bg01.jpg">
+            <div class="row align-items-center mb--20">
+                <div class="col-lg-6 mb-20">
+                    <div class="search-ticket-header">
+                        <h6 class="category">Xin chào đến với Boleto </h6>
+                        <h3 class="title">Bạn đang tìm kiếm</h3>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-20 ">
+                    <ul class="tab-menu ticket-tab-menu pull-right" style="display: block;">
+                        <li class="active" style="float:right;">
+                            <div class="tab-thumb">
+                                <img src="/assets/images/ticket/ticket-tab01.png" alt="ticket">
+                            </div>
+                            <span>Phim</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-area">
+                <div class="tab-item active">
+                    <form class="ticket-search-form" action="/movies">
+                        <div class="form-group large">
+                            <input name="keyword" type="text" placeholder="Tìm phim" value="@ViewBag.keyword">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </div>
+                        <div class="form-group">
+                            <div class="thumb">
+                                <img src="/assets/images/ticket/city.png" alt="ticket">
+                            </div>
+                            <span class="type">Thể loại</span>
+                            <select name="category" class="select-bar" onchange='this.form.submit();'>
+                                <option value="0">Tất cả</option>
+                                @foreach (var item in theloais)
+                                {
+                                    if (item.MaTheLoai == category)
+                                    {
+                                        <option value="@item.MaTheLoai" selected>@item.TenTheLoai</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.MaTheLoai">@item.TenTheLoai</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="thumb">
+                                <img src="/assets/images/ticket/cinema.png" alt="ticket">
+                            </div>
+                            <span class="type">Rạp</span>
+                            <select name="cinema" class="select-bar" onchange='this.form.submit();'>
+                                @foreach (var item in raps)
+                                {
+                                    if (item.MaRap == cinema)
+                                    {
+                                        <option value="@item.MaRap" selected>@item.TenRap</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.MaRap">@item.TenRap</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Ticket-Search========== -->
+<!-- ==========Movie-Section========== -->
+<section class="movie-section padding-top padding-bottom">
+    <div class="container">
+        <div class="row flex-wrap-reverse justify-content-center">
+            <div class="col-sm-10 col-md-8 col-lg-3">
+                <div class="widget-1 widget-banner">
+                    <div class="widget-1-body">
+                        <a href="#">
+                            <img src="/assets/images/sidebar/banner/banner01.jpg" alt="banner">
+                        </a>
+                    </div>
+                </div>
+                <div class="widget-1 widget-banner">
+                    <div class="widget-1-body">
+                        <a href="#">
+                            <img src="/assets/images/sidebar/banner/banner02.jpg" alt="banner">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 mb-50 mb-lg-0">
+                <div class="filter-tab tab">
+                    <div class="tab-area">
+                        <div class="tab-item active">
+                            <div class="movie-area mb-10">
+                                @if (Model == null || Model.Count == 0)
+                                {
+                                    <p>Không có thông tin hiển thị!</p>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <div class="movie-list">
+                                            <div class="movie-thumb c-thumb">
+                                                <a href="/movies/detail/@item.MaPhim?cinema=@cinema" class="w-100 bg_img h-100" data-background="@item.HinhAnh">
+                                                    <img class="d-sm-none" src="@item.HinhAnh" alt="movie">
+                                                </a>
+                                            </div>
+                                            <div class="movie-content bg-one">
+                                                <h5 class="title">
+                                                    <a href="/movies/detail/@item.MaPhim?cinema=@cinema">@item.TenPhim</a>
+                                                </h5>
+                                                <p class="duration">@item.ThoiLuong phút</p>
+                                                <div class="movie-tags">
+                                                    @foreach (var theloai in item.TheLoais)
+                                                    {
+                                                        <a href="javascript:;">@theloai.TenTheLoai</a>
+                                                    }
+                                                </div>
+                                                <div class="release">
+                                                    <span>Khởi chiếu: </span> <a href="javascript:;"> @item.NgayKhoiChieu.ToString("dd/MM/yyyy")</a>
+                                                </div>
+                                                <div class="book-area">
+                                                    <div class="book-ticket">
+                                                        <div class="react-item mr-auto">
+                                                            <a href="/booking?movies=@item.MaPhim&cinema=@cinema">
+                                                                <div class="thumb">
+                                                                    <img src="/assets/images/icons/book.png" alt="icons">
+                                                                </div>
+                                                                <span>Đặt vé</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="react-item">
+                                                            <a href="@item.VideoGioiThieu" target="_blank" class="popup-video">
+                                                                <div class="thumb">
+                                                                    <img src="/assets/images/icons/play-button.png" alt="icons">
+                                                                </div>
+                                                                <span>Xem trailer</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Movie-Section========== -->

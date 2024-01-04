@@ -1,0 +1,377 @@
+﻿@using WebDatVe.Hepper
+@{
+    HttpCookie cookie = Request.Cookies.Get("MaAdmin");
+    var ma = int.Parse(cookie.Value);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title | Admin Web</title>
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/plugins/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/plugins/ionicons-2.0.1/css/ionicons.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/Areas/Admin/Content/dist/css/skins/_all-skins.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/plugins/iCheck/flat/blue.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/plugins/morris/morris.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- Date Picker -->
+    <link href="~/Content/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Areas/Admin/Content/customer.css" />
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/Areas/Admin/Content/plugins/datatables/dataTables.bootstrap.css">
+    <link href="~/Areas/Admin/Content/plugins/datatables/buttons.dataTables.min.css" rel="stylesheet" />
+    <style>
+        .skin-purple .wrapper, .skin-purple .main-sidebar, .skin-purple .left-side {
+            background-color: #605ca8;
+        }
+        .skin-purple .sidebar-menu > li:hover > a, .skin-purple .sidebar-menu > li.active > a {
+            color: #fff;
+            background: #2f2d57;
+            border-left-color: #605ca8;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="/Admin/BangDieuKhien" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>Ad</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Admin</b> Web</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="javascript:;" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="/Areas/Admin/Content/dist/img/avatar5.png" class="user-image" alt="User Image">
+                                <span class="hidden-xs">@Server.UrlDecode(Request.Cookies["HoTenAdmin"].Value)</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="/Areas/Admin/Content/dist/img/avatar5.png" class="img-circle" alt="User Image">
+                                    <p>
+                                        @Server.UrlDecode(Request.Cookies["HoTenAdmin"].Value)
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-right">
+                                        <a href="@Url.Action("Logout", "BangDieuKhien")" class="btn btn-default btn-flat">Thoát</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar" style="height: auto;">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="/Areas/Admin/Content/dist/img/avatar5.png" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>@Server.UrlDecode(Request.Cookies["HoTenAdmin"].Value)</p>
+                        <a href="javascript:;"><i class="fa fa-circle text-success"></i>Online</a>
+                    </div>
+                </div>
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu">
+                    <li class="@ViewBag.BangDieuKhien @ViewBag.PhanQuyen @ViewBag.TaiKhoan @ViewBag.KhachHang @ViewBag.TinTuc treeview">
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> <span>QUẢN TRỊ</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@ViewBag.BangDieuKhien">
+                                <a href="@Url.Action("Index", "BangDieuKhien")"><i class="fa fa-circle-o"></i>Quản trị</a>
+                            </li>
+                            @if (StringHellper.CheckPer("Quyền", ma))
+                            {
+                                <li class="@ViewBag.PhanQuyen">
+                                    <a href="@Url.Action("Index", "PhanQuyen")"><i class="fa fa-circle-o"></i>Quyền</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Tài khoản", ma))
+                            {
+                                <li class="@ViewBag.TaiKhoan">
+                                    <a href="@Url.Action("Index", "TaiKhoan")"><i class="fa fa-circle-o"></i>Tài khoản</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Khách hàng", ma))
+                            {
+                                <li class="@ViewBag.KhachHang">
+                                    <a href="@Url.Action("Index", "KhachHang")"><i class="fa fa-circle-o"></i>Khách hàng</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Tin tức", ma))
+                            {
+                                <li class="@ViewBag.TinTuc">
+                                    <a href="@Url.Action("Index", "TinTuc")"><i class="fa fa-circle-o"></i>Tin tức</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
+                    <li class="@ViewBag.Rap @ViewBag.Phong @ViewBag.Ghe @ViewBag.TheLoai @ViewBag.Phim @ViewBag.DichVu treeview">
+                        <a href="#">
+                            <i class="fa fa-tasks"></i> <span>DANH MỤC</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            @if (StringHellper.CheckPer("Rạp", ma))
+                            {
+                                <li class="@ViewBag.Rap">
+                                    <a href="@Url.Action("Index", "Rap")"><i class="fa fa-circle-o"></i>Rạp chiếu</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Phòng", ma))
+                            {
+                                <li class="@ViewBag.Phong">
+                                    <a href="@Url.Action("Index", "Phong")"><i class="fa fa-circle-o"></i>Phòng</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Ghế", ma))
+                            {
+                                <li class="@ViewBag.Ghe">
+                                    <a href="@Url.Action("Index", "Ghe")"><i class="fa fa-circle-o"></i>Ghế</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Thể loại", ma))
+                            {
+                                <li class="@ViewBag.TheLoai">
+                                    <a href="@Url.Action("Index", "TheLoai")"><i class="fa fa-circle-o"></i>Thể loại</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Phim", ma))
+                            {
+                                <li class="@ViewBag.Phim">
+                                    <a href="@Url.Action("Index", "Phim")"><i class="fa fa-circle-o"></i>Phim</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Dịch vụ", ma))
+                            {
+                                <li class="@ViewBag.DichVu">
+                                    <a href="@Url.Action("Index", "DichVu")"><i class="fa fa-circle-o"></i>Dịch vụ</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="@ViewBag.LichChieu @ViewBag.DatVe treeview" >
+                        <a href="#">
+                            <i class="fa fa-shopping-cart"></i> <span>NGHIỆP VỤ</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            @if (StringHellper.CheckPer("Lịch chiếu", ma))
+                            {
+                                <li class="@ViewBag.LichChieu">
+                                    <a href="@Url.Action("Index", "LichChieu")"><i class="fa fa-circle-o"></i>Lịch chiếu</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Đặt vé", ma))
+                            {
+                                <li class="@ViewBag.DatVe">
+                                    <a href="@Url.Action("Index", "DatVe")"><i class="fa fa-circle-o"></i>Đặt vé</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
+                    <li class="@ViewBag.BaoCao @ViewBag.ThongKe treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i> <span>BÁO CÁO - THỐNG KÊ</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            @if (StringHellper.CheckPer("Báo cáo", ma))
+                            {
+                                <li class="@ViewBag.BaoCao">
+                                    <a href="@Url.Action("Index", "BaoCao")"><i class="fa fa-circle-o"></i>Báo cáo</a>
+                                </li>
+                            }
+                            @if (StringHellper.CheckPer("Thống kê", ma))
+                            {
+                                <li class="@ViewBag.ThongKe">
+                                    <a href="@Url.Action("Index", "ThongKe")"><i class="fa fa-circle-o"></i>Thống kê</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    @ViewBag.Controller
+                    <small>@ViewBag.Title</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="@Url.Action("Index", "BangDieuKhien")"><i class="fa fa-dashboard"></i>Quản trị</a></li>
+                    <li class="active">@ViewBag.Controller</li>
+                </ol>
+            </section>
+            @if (TempData["notice"] != null)
+            {
+                <p style="font-size: 20px; padding: 0px 15px; color: white; display: block; background-color: chocolate;">@TempData["notice"]</p>
+            }
+            <!-- Main content -->
+            <section class="content">
+                @RenderBody()
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0
+            </div>
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="javascript:;">Web</a>.</strong> All rights reserved.
+        </footer>
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <div style="display: none">
+        <div id="view-null"></div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery-3.1.0.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/ClientScripts/mvcfoolproof.unobtrusive.min.js"></script>
+    <script src="~/Scripts/messages_vi.js"></script>
+    <!-- Sparkline -->
+    <script src="/Areas/Admin/Content/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!-- jvectormap -->
+    <script src="/Areas/Admin/Content/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/Areas/Admin/Content/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="/Areas/Admin/Content/plugins/knob/jquery.knob.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script src="~/Content/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- FastClick -->
+    <script src="/Areas/Admin/Content/plugins/fastclick/fastclick.min.js"></script>
+    <!-- DataTables -->
+    <script src="/Areas/Admin/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Admin/Content/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/datatables/buttons.flash.min.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/datatables/jszip.min.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/datatables/pdfmake.min.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/datatables/vfs_fonts.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/datatables/buttons.html5.min.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/datatables/buttons.print.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/Areas/Admin/Content/dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/Areas/Admin/Content/dist/js/demo.js"></script>
+    <script src="/Areas/Admin/Content/ckeditor/ckeditor.js"></script>
+    <script src="/Areas/Admin/Content/ckfinder/ckfinder.js"></script>
+    <script>
+        $(function () {
+            try {
+                $('.datetimepicker').datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+            }
+            catch (err) { }
+
+            $("#example1").DataTable({
+                "aaSorting": [],
+                dom: 'Bfrtip',
+                searching: false,
+                buttons: [
+                    'excel', 'pdf', 'print'
+                ]
+            });
+            $("#example2").DataTable({
+                "aaSorting": [],
+                dom: 'Bfrtip',
+                searching: false,
+                buttons: [
+                    'excel', 'pdf', 'print'
+                ]
+            });
+
+            $("#btnImg").click(function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $('#imgAnh').attr("src", fileUrl);
+                    $('#HinhAnh').attr("value", fileUrl);
+                };
+                finder.popup();
+            });
+
+            try {
+                CKEDITOR.replace("NoiDung");
+            }
+            catch (err) { }
+        });
+
+        function addService(id) {
+            $('#MaDichVu').val(id);
+            $('#themDichVu').modal();
+        }
+
+        function editService(id, soluong) {
+            $('#MaSuDungDichVu').val(id);
+            $('#SoLuong').val(soluong);
+            $('#suaDichVu').modal();
+        }
+
+        function addCustomer() {
+            $('#themKhach').modal();
+        }
+
+        function printDiv(divID) {
+            var divElements = document.getElementById(divID).innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                divElements + "</body>";
+            window.print();
+            document.body.innerHTML = oldPage;
+        }
+    </script>
+</body>
+</html>

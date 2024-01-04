@@ -1,0 +1,76 @@
+﻿@model List<DichVu>
+@using WebDatVe.Hepper
+@{
+    ViewBag.Title = "Danh sách Dịch vụ";
+    ViewBag.Controller = "Dịch vụ";
+    ViewBag.General = "active";
+    ViewBag.DichVu = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <form action="@Request.Url.AbsolutePath">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="keyword" placeholder="Từ khóa" value="@ViewBag.TextSearch">
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary">Tìm kiếm</button>
+                            <a href="@Url.Action("Add")" class="btn btn-success">Thêm</a>
+                        </div>
+                    </div>
+                </form>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Hình ảnh</th>
+                            <th>Tên dịch vụ</th>
+                            <th>Giá (VNĐ)</th>
+                            <th>Trạng thái</th>
+                            <th class="w100">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@item.HinhAnh" width="100" />
+                                </td>
+                                <td>@item.TenDichVu</td>
+                                <td>@item.GiaTien.ToString("N0")</td>
+                                <td>
+                                    @foreach (var tt in ConfigData.DSTrangThaiDichVu)
+                                    {
+                                        if(item.TrangThai == tt.Key)
+                                        {
+                                            if (tt.Key == (int)TrangThaiDichVu.DangBan)
+                                            {
+                                                <label class="label label-info">@tt.Value</label>
+                                            }
+                                            else if (tt.Key == (int)TrangThaiDichVu.NgungBan)
+                                            {
+                                                <label class="label label-danger">@tt.Value</label>
+                                            }
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { Id = item.MaDichVu })" class="btn btn-info btn-sm">Sửa</a>
+                                    <a href="@Url.Action("Delete", new { Id = item.MaDichVu })" onclick="return confirm('Bạn chắc chắn muốn xóa mục đã chọn?')" class="btn btn-danger btn-sm">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

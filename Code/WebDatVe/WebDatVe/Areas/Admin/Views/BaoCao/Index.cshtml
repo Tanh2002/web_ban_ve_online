@@ -1,0 +1,37 @@
+﻿@using WebDatVe.Hepper
+@{
+    ViewBag.Title = "Báo cáo hoạt động";
+    ViewBag.Controller = "Bảo cáo";
+    ViewBag.General = "active";
+    ViewBag.BaoCao = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+
+    var db = new WebDatVePhimEntities();
+    var datenow = DateTime.Now;
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <h2>Tổng doanh thu: <strong style="color:red;"> @(db.DonHangs.Where(x => x.TrangThai != (int)TrangThaiDonHang.Huy).ToList().Sum(x => x.ThanhTien).ToString("N0")) VNĐ</strong></h2>
+                <i>Doanh thu 12 tháng gần nhất:</i>
+                @for (var i = 0; i < 12; i++)
+                {
+                    var dateMonth = datenow;
+                    if (i > 0)
+                    {
+                        dateMonth = datenow.AddMonths(-i);
+                    }
+                    var listdata = db.DonHangs.Where(x => x.TrangThai != (int)TrangThaiDonHang.Huy && x.NgayDat.Year == dateMonth.Year && x.NgayDat.Month == dateMonth.Month).ToList();
+
+                    <h3>@dateMonth.ToString("MM-yyyy"): <strong style="color:red;"> @(listdata.Sum(x => x.ThanhTien).ToString("N0")) VNĐ</strong></h3>
+                }
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

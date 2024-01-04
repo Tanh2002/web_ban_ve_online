@@ -1,0 +1,83 @@
+﻿@model List<DonHang>
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ==========Event-Section========== -->
+<section class="event-section padding-top padding-bottom">
+    <div class="container">
+        <div class="row flex-wrap-reverse justify-content-center">
+            <div class="col-sm-10 col-md-8 col-lg-3">
+                <div class="widget widget-categories">
+                    <h5 class="title">Menu</h5>
+                    <ul>
+                        <li>
+                            <a href="/account">
+                                <span>Tài khoản</span>
+                            </a>
+                        </li>
+                        <li style="font-weight:bold;">
+                            <a href="/account/order">
+                                <span style="color: chocolate;">Đơn hàng</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/account/logout">
+                                <span>Thoát</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 mb-50 mb-lg-0">
+                <div class="filter-tab">
+                    <div class="filter-area">
+                        <div class="filter-main">
+                            <div class="left w-100 justify-content-between">
+                                <div class="item">
+                                    <h5>Vé đã đặt</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        @if (Model == null || Model.Count == 0)
+                        {
+                            <p>Không có dữ liệu để hiển thị!</p>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="sports-grid">
+                                        <div class="movie-thumb c-thumb">
+                                            <a href="/account/orderdetail/@item.MaDonHang">
+                                                <img src="@item.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.Phim.HinhAnh" alt="sports">
+                                            </a>
+                                            <div class="event-date">
+                                                <h6 class="date-title">@item.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.NgayChieu.Day.ToString("00")</h6>
+                                                <span>@item.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.NgayChieu.Month.ToString("00")</span>
+                                            </div>
+                                        </div>
+                                        <div class="movie-content bg-one">
+                                            <h5 class="title m-0" style="min-height: 182px; ">
+                                                <a href="/account/orderdetail/@item.MaDonHang">@item.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.Phim.TenPhim</a>
+                                            </h5>
+                                            <div class="movie-rating-percent">
+                                                <span>Rạp: @item.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.Rap.TenRap - @item.ChiTietDonHangs.FirstOrDefault().XuatChieu.GioChieu.ToString("00"):@item.ChiTietDonHangs.FirstOrDefault().XuatChieu.PhutChieu.ToString("00")</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Event-Section========== -->

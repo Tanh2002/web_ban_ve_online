@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/odometer.css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-icon">
+
+    <title>Boleto  - Website đặt vé xem phim</title>
+
+
+</head>
+
+<body>
+    <!-- ==========Preloader========== -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ==========Preloader========== -->
+    <!-- ==========Sign-In-Section========== -->
+    <section class="account-section bg_img" data-background="/assets/images/account/account-bg.jpg">
+        <div class="container">
+            <div class="padding-top padding-bottom">
+                <div class="account-area">
+                    <div class="section-header-3">
+                        <span class="cate">Chào mừng</span>
+                        <h2 class="title">đến Boleto </h2>
+                    </div>
+                    <form class="account-form" method="post" action="@Url.Action("register")">
+                        <div class="form-group">
+                            <label for="hoten">Họ tên<span>*</span></label>
+                            <input type="text" name="HoTen" placeholder="Nhập họ tên" id="hoten" required maxlength="250" minlength="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="taikhoan">Tài khoản<span>*</span></label>
+                            <input type="text" name="TenDangNhap" placeholder="Nhập tài khoản" id="taikhoan" required maxlength="50" minlength="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="pass1">Mật khẩu<span>*</span></label>
+                            <input type="password" name="MatKhau" placeholder="Nhập mật khẩu" id="pass1" required maxlength="50" minlength="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="email1">Email<span>*</span></label>
+                            <input type="email" name="Email" placeholder="Nhập email" id="email1" required maxlength="250">
+                        </div>
+                        <div class="form-group">
+                            <label for="sdt">SĐT<span>*</span></label>
+                            <input type="text" name="SoDienThoai" placeholder="Nhập số điện thoại" id="sdt" required maxlength="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="cmnd">CMDN<span>*</span></label>
+                            <input type="text" name="CMND" placeholder="Nhập chứng minh nhân dân" id="cmnd" required maxlength="50">
+                        </div>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Đăng ký">
+                        </div>
+                        @if (TempData["notice"] != null)
+                        {
+                            <p style="color:red; font-style:italic;">@TempData["notice"]</p>
+                        }
+                    </form>
+                    <div class="option">
+                        Bạn đã có tài khoản? <a href="/account/login">Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ==========Sign-In-Section========== -->
+
+
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/isotope.pkgd.min.js"></script>
+    <script src="/assets/js/magnific-popup.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/wow.min.js"></script>
+    <script src="/assets/js/countdown.min.js"></script>
+    <script src="/assets/js/odometer.min.js"></script>
+    <script src="/assets/js/viewport.jquery.js"></script>
+    <script src="/assets/js/nice-select.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/ClientScripts/mvcfoolproof.unobtrusive.min.js"></script>
+    <script src="~/Scripts/messages_vi.js"></script>
+</body>
+</html>
+

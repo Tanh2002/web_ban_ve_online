@@ -1,0 +1,101 @@
+﻿@model Phim
+@using WebDatVe.Hepper
+@{
+    if (Model == null || Model.MaPhim == 0)
+    {
+        Response.Redirect("/movies");
+    }
+}
+
+<!-- ==========Banner-Section========== -->
+<section class="details-banner bg_img" data-background="@Model.HinhAnh">
+    <div class="container">
+        <div class="details-banner-wrapper">
+            <div class="details-banner-thumb">
+                <img src="@Model.HinhAnh" alt="movie">
+                <a href="@Model.VideoGioiThieu" target="_blank" class="video-popup">
+                    <img src="/assets/images/movie/video-button.png" alt="movie">
+                </a>
+            </div>
+            <div class="details-banner-content offset-lg-3">
+                <h3 class="title">@Model.TenPhim</h3>
+                <div class="tags">
+                    @foreach (var theloai in Model.TheLoais)
+                    {
+                        <a href="javascript:;">@theloai.TenTheLoai</a>
+                    }
+                </div>
+                <a href="javascript:;" class="button">
+                    @ConfigData.DSTrangThaiPhim.FirstOrDefault(x => x.Key == Model.TrangThai).Value
+                </a>
+                <div class="social-and-duration">
+                    <div class="duration-area">
+                        <div class="item">
+                            <i class="fas fa-calendar-alt"></i><span>@Model.NgayKhoiChieu.ToString("dd/MM/yyyy")</span>
+                        </div>
+                        <div class="item">
+                            <i class="far fa-clock"></i><span>@Model.ThoiLuong phút</span>
+                        </div>
+                    </div>
+                    <ul class="social-share">
+                        <li><a href="javascript:;"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="javascript:;"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="javascript:;"><i class="fab fa-pinterest-p"></i></a></li>
+                        <li><a href="javascript:;"><i class="fab fa-linkedin-in"></i></a></li>
+                        <li><a href="javascript:;"><i class="fab fa-google-plus-g"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- ==========Banner-Section========== -->
+<!-- ==========Book-Section========== -->
+<section class="book-section bg-one">
+    <div class="container">
+        <div class="book-wrapper offset-lg-3">
+            <div class="left-side">
+                <div class="item">
+                    <div class="item-header">
+                        <h5 class="title">4.5</h5>
+                        <div class="rated">
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="/booking?movies=@Model.MaPhim&cinema=@ViewBag.cinema" class="custom-button">Đặt vé</a>
+        </div>
+    </div>
+</section>
+<!-- ==========Book-Section========== -->
+<!-- ==========Movie-Section========== -->
+<section class="movie-details-section padding-top padding-bottom">
+    <div class="container">
+        <div class="row justify-content-center flex-wrap-reverse mb--50">
+            <div class="col-lg-3 col-sm-10 col-md-6 mb-50">
+                <div class="widget-1 widget-banner">
+                    <div class="widget-1-body">
+                        <a href="javascript:;">
+                            <img src="/assets/images/sidebar/banner/banner01.jpg" alt="banner">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 mb-50">
+                <div class="movie-details">
+                    <h3 class="title">Giới thiệu</h3>
+                    <div style="background-color: white; padding: 20px; border-radius: 10px;">
+                        @Html.Raw(Model.NoiDung)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Movie-Section========== -->

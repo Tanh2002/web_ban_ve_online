@@ -1,0 +1,150 @@
+﻿
+
+/*********************************
+6. About
+*********************************/
+
+.about
+{
+	background: #ffffff;
+	padding-top: 107px;
+	padding-bottom: 104px;
+}
+.about_title
+{
+	max-width: 585px;
+}
+.about_row
+{
+	margin-top: 21px;
+}
+.about_images
+{
+	height: 100%;
+	padding-left: 17px;
+	padding-right: 19px;
+	padding-top: 14px;
+}
+.about_sig
+{
+	margin-top: 20px;
+}
+
+/*********************************
+7. Split Section Right
+*********************************/
+
+.split_section_right
+{
+	background: #ffffff;
+}
+.split_section_right_content
+{
+	padding-top: 112px;
+	padding-left: 67px;
+	padding-bottom: 77px;
+	padding-right: 130px;
+}
+.split_section_title h1
+{
+	font-size: 72px;
+}
+.split_section_text
+{
+	margin-top: 20px;
+}
+.milestones_container
+{
+	margin-top: 84px;
+	padding-right: 50px;
+	padding-left: 10px;
+}
+.milestone
+{
+	width: calc(100% / 3);
+	margin-bottom: 60px;
+}
+.milestone_counter
+{
+	font-size: 72px;
+	color: #393939;
+	font-weight: 600;
+	line-height: 0.75;
+}
+.milestone_title
+{
+	font-size: 16px;
+	color: #868686;
+	font-weight: 600;
+	line-height: 0.75;
+	margin-top: 35px;
+}
+.split_section_image
+{
+	height: 100%;
+}
+
+/*********************************
+8. Split Section Left
+*********************************/
+
+.split_section_left
+{
+	background: #ffffff;
+}
+.split_section_left_content
+{
+	padding-left: 104px;
+	padding-top: 116px;
+	padding-right: 95px;
+	padding-bottom: 120px;
+}
+.loaders_container
+{
+	margin-top: 43px;
+	margin-left: -22px;
+}
+.loader_container
+{
+	width: calc(100% / 3);
+	height: 155px;
+}
+.loader
+{
+	width: 155px;
+	height: 155px;
+	background: transparent;
+}
+.loader_content
+{
+	position: absolute;
+	left: 50%;
+	bottom: 48px;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	transform: translateX(-50%);
+	font-size: 18px;
+	font-weight: 500;
+	color: #232323;
+	white-space: nowrap;
+	text-align: center;
+}
+.loader_title
+{
+	font-size: 14px;
+	font-weight: 600;
+	color: #868686;
+	line-height: 0.75;
+	white-space: nowrap;
+}
+.progressbar-text
+{
+	top: calc(40% + 1px) !important;
+	font-size: 48px !important;
+	font-weight: 600 !important;
+	color: #393939 !important;
+	line-height: 0.75 !important;
+}
+

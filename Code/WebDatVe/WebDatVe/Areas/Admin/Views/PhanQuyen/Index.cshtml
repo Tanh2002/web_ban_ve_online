@@ -1,0 +1,54 @@
+﻿@model List<PhanQuyen>
+@{
+    ViewBag.Title = "Danh sách quyền";
+    ViewBag.Controller = "Phân quyền";
+    ViewBag.General = "active";
+    ViewBag.PhanQuyen = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <form action="@Request.Url.AbsolutePath">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="keyword" placeholder="Từ khóa" value="@ViewBag.TextSearch">
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary">Tìm kiếm</button>
+                            <a href="@Url.Action("Add")" class="btn btn-success">Thêm</a>
+                        </div>
+                    </div>
+                </form>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tên quyền</th>
+                            <th>Danh sách quyền</th>
+                            <th class="w100">Tác vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.TenQuyen</td>
+                                <td>@item.DanhSach</td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { Id = item.MaQuyen })" cl class="btn btn-info btn-sm">Sửa</a>
+                                    <a href="@Url.Action("Delete", new { Id = item.MaQuyen })" on onclick="return confirm('Bạn chắc chắn muốn xóa mục đã chọn?')" class="btn btn-danger btn-sm">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

@@ -1,0 +1,109 @@
+﻿@model DonHang
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ==========Event-Section========== -->
+<section class="event-section padding-top padding-bottom">
+    <div class="container">
+        <div class="row flex-wrap-reverse justify-content-center">
+            <div class="col-sm-10 col-md-8 col-lg-3">
+                <div class="widget widget-categories">
+                    <h5 class="title">Menu</h5>
+                    <ul>
+                        <li>
+                            <a href="/account">
+                                <span>Tài khoản</span>
+                            </a>
+                        </li>
+                        <li style="font-weight:bold;">
+                            <a href="/account/order">
+                                <span style="color: chocolate;">Đơn hàng</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/account/logout">
+                                <span>Thoát</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 mb-50 mb-lg-0">
+                <div class="filter-tab">
+                    <div class="filter-area">
+                        <div class="filter-main">
+                            <div class="left w-100 justify-content-between">
+                                <div class="item">
+                                    <h5>Thông tin vé đã đặt</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        @if (Model == null || Model.MaDonHang == 0)
+                        {
+                            <p>Không có dữ liệu để hiển thị!</p>
+                        }
+                        else
+                        {
+                            var stt = 1;
+                            var phim = Model.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.Phim;
+                            <div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between" style="width: 96%;">
+                                <div class="title-area">
+                                    <h5 class="title">Phim: @phim.TenPhim</h5>
+                                    <p>
+                                        @foreach (var tl in phim.TheLoais)
+                                        {
+                                            if (stt == 1)
+                                            {
+                                                <span><strong>Thể loại</strong>: @tl.TenTheLoai</span>
+                                            }
+                                            else
+                                            {
+                                                <span> | @tl.TenTheLoai</span>
+                                            }
+                                            stt++;
+                                        }
+                                    </p>
+                                    <p><strong>Thời lượng: </strong>@phim.ThoiLuong phút</p>
+                                </div>
+                            </div>
+                            <div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between" style="width: 96%;">
+                                <div class="title-area">
+                                    <h5 class="title">Thông tin vé</h5>
+                                    <p><strong>Rạp: </strong>@Model.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.Rap.TenRap</p>
+                                    <p><strong>Địa chỉ: </strong>@Model.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.Rap.DiaChi</p>
+                                    <p><strong>Lịch chiếu: </strong>@Model.ChiTietDonHangs.FirstOrDefault().XuatChieu.LichChieu.NgayChieu.ToString("dd/MM/yyyy") - @Model.ChiTietDonHangs.FirstOrDefault().XuatChieu.GioChieu.ToString("00"):@Model.ChiTietDonHangs.FirstOrDefault().XuatChieu.PhutChieu.ToString("00")</p>
+                                    <p>
+                                        <strong>Ghế: </strong>
+                                        @foreach (var chitiet in Model.ChiTietDonHangs)
+                                        {
+                                            <span>@chitiet.Ghe.TenGhe </span>
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="checkout-widget d-flex flex-wrap align-items-center justify-cotent-between" style="width: 96%;">
+                                <div class="title-area">
+                                    <h5 class="title">Thanh toán</h5>
+                                    <p>
+                                        <strong>Combo: </strong>
+                                        @foreach (var chitiet in Model.DonHangDichVus)
+                                        {
+                                            <span>@chitiet.SoLuong x @chitiet.DichVu.TenDichVu </span>
+                                        }
+                                    </p>
+                                    <p><strong>Tổng tiền: </strong> <strong style="font-size:25px; color:red;"> @Model.ThanhTien.ToString("N0") đ</strong></p>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Event-Section========== -->

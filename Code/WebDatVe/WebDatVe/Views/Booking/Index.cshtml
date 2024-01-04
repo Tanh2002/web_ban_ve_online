@@ -1,0 +1,123 @@
+﻿@model Phim
+@using WebDatVe.Hepper
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var db = new WebDatVePhimEntities();
+    var raps = db.Raps.ToList();
+
+    var cinema = 0;
+    if (ViewBag.cinema != null)
+    {
+        cinema = int.Parse(ViewBag.cinema + "");
+    }
+
+    var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+    var lichChieu = db.LichChieux.Where(x => x.MaRap == cinema && x.MaPhim == Model.MaPhim && x.NgayChieu >= date).OrderBy(x => x.NgayChieu).ToList();
+
+}
+
+<!-- ==========Banner-Section========== -->
+<section class="details-banner hero-area bg_img" data-background="@Model.HinhAnh">
+    <div class="container">
+        <div class="details-banner-wrapper">
+            <div class="details-banner-content">
+                <h3 class="title">@Model.TenPhim</h3>
+                <div class="tags">
+                    @foreach (var theloai in Model.TheLoais)
+                    {
+                        <a href="javascript:;">@theloai.TenTheLoai</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==========Banner-Section========== -->
+<!-- ==========Book-Section========== -->
+<section class="book-section bg-one">
+    <div class="container">
+        <form class="ticket-search-form two" method="get" action="/booking">
+            <input type="hidden" name="movies" value="@Model.MaPhim" />
+            <div class="form-group">
+                <div class="thumb">
+                    <img src="/assets/images/ticket/cinema.png" alt="ticket">
+                </div>
+                <span class="type">cinema</span>
+                <select name="cinema" class="select-bar" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    @foreach (var item in raps)
+                    {
+                        if (item.MaRap == cinema)
+                        {
+                            <option value="@item.MaRap" selected>@item.TenRap</option>
+                        }
+                        else
+                        {
+                            <option value="@item.MaRap">@item.TenRap</option>
+                        }
+                    }
+                </select>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- ==========Book-Section========== -->
+<!-- ==========Movie-Section========== -->
+<div class="ticket-plan-section padding-bottom padding-top">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 mb-5 mb-lg-0">
+                @if (lichChieu == null || lichChieu.Count == 0)
+                {
+                    <p>Không lịch chiếu phim nào để hiển thị!</p>
+                }
+                else
+                {
+                    <ul class="seat-plan-wrapper bg-five">
+                        @foreach (var item in lichChieu)
+                        {
+                            var xuatChieus = db.XuatChieux.Where(x => x.MaLichChieu == item.MaLichChieu).OrderBy(x => x.GioChieu).ThenBy(x => x.PhutChieu).ToList();
+
+                            if (xuatChieus != null && xuatChieus.Count > 0)
+                            {
+                                if (item.NgayChieu == date)
+                                {
+                                    xuatChieus = xuatChieus.Where(x => x.GioChieu >= DateTime.Now.Hour).ToList();
+                                }
+                                <li>
+                                    <div class="movie-name">
+                                        <div class="icons">
+                                            <i class="far fa-calendar"></i>
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                        <a class="name">@item.NgayChieu.ToString("dd/MM/yyyy")</a>
+                                    </div>
+                                    <div class="movie-schedule">
+                                        @foreach (var xc in xuatChieus)
+                                        {
+                                            <a href="/booking/seatplan?movies=@Model.MaPhim&cinema=@cinema&screen=@xc.MaXuatChieu" class="item">
+                                                @xc.GioChieu.ToString("00"):@xc.PhutChieu.ToString("00") @ConfigData.DSLoaiChieuPhim.FirstOrDefault(x => x.Key == xc.LoaiChieuPhim).Value
+                                            </a>
+                                        }
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+                }
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-10">
+                <div class="widget-1 widget-banner">
+                    <div class="widget-1-body">
+                        <a href="javascript:;">
+                            <img src="/assets/images/sidebar/banner/banner03.jpg" alt="banner">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ==========Movie-Section========== -->

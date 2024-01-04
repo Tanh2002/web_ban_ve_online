@@ -1,0 +1,32 @@
+﻿@model Ghe
+@{
+    ViewBag.Title = "Sửa Ghế";
+    ViewBag.Controller = "Ghế";
+    ViewBag.General = "active";
+    ViewBag.Ghe = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Id = "view-null";
+}
+
+<div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div><!-- /.box-header -->
+            <!-- form start -->
+            <form action="@Url.Action("Edit")" method="post" class="form-horizontal">
+                @Html.AntiForgeryToken()
+                @Html.Partial("_Update", Model)
+                <div class="box-footer">
+                    <a href="@Url.Action("Index")" class="btn btn-default pull-left">Danh sách</a>
+                    <a href="@Url.Action("Delete", new { Id = Model.MaGhe })" onclick="return confirm('Bạn chắc chắn muốn xóa mục đã chọn?')" class="btn btn-danger pull-right">Xóa</a>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-right:5px!important;">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
